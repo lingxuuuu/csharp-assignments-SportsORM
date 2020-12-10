@@ -31,8 +31,16 @@ namespace SportsORM.Controllers
         [HttpGet("level_1")]
         public IActionResult Level1()
         {
+            ViewBag.WomensLeagues = _context.Leagues
+                .Where(l => l.Name.Contains("Womens"))
+                .ToList();
+
             ViewBag.HockeyLeagues = _context.Leagues
                 .Where(l => l.Sport.Contains("Hockey"))
+                .ToList();
+
+            ViewBag.FootBallLeagues =_context.Leagues
+                .Where(l => l.Sport != "Football" )
                 .ToList();
             
             ViewBag.ConLeagues = _context.Leagues
@@ -55,6 +63,10 @@ namespace SportsORM.Controllers
                 .Where(l => l.Location.Contains("City"))
                 .ToList();
 
+            ViewBag.TLeagues = _context.Teams 
+                .Where(l => l.TeamName.StartsWith("T"))
+                .ToList();
+
             ViewBag.AlphaLeagues =_context.Teams
                 .OrderBy(l => l.Location).ToList();
 
@@ -69,9 +81,12 @@ namespace SportsORM.Controllers
                 .Where(l => l.FirstName.Contains("Joshua"))
                 .ToList();
 
+            ViewBag.CopperLeagues =_context.Players
+                .Where(l => l.LastName == "Cooper" && l.FirstName != "Joshua" )
+                .ToList();
+
             ViewBag.OrLeagues =_context.Players
-                .Where(l => l.FirstName.Contains("Alexander"))
-                .Where(l => l.FirstName.Contains("Wyatt"))
+                .Where(l => l.FirstName == "Alexander" || l.FirstName == "Wyatt" )
                 .ToList();
 
             return View();
